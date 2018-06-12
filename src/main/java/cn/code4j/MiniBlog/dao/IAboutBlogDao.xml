@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.code4j.MiniBlog.dao.IAboutBlogDao">
+	
+	<insert id="insertBlog" parameterType="Blog">
+		insert into blog
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="releasedate != null">
+				releaseDate,
+			</if>
+			<if test="zannum != null">
+				zanNum,
+			</if>
+			<if test="talknum != null">
+				talkNum,
+			</if>
+			<if test="label != null">
+				label,
+			</if>
+			<if test="text != null">
+				text,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				#{uid,jdbcType=INTEGER},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="releasedate != null">
+				#{releasedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="zannum != null">
+				#{zannum,jdbcType=INTEGER},
+			</if>
+			<if test="talknum != null">
+				#{talknum,jdbcType=INTEGER},
+			</if>
+			<if test="label != null">
+				#{label,jdbcType=VARCHAR},
+			</if>
+			<if test="text != null">
+				#{text,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<select id="getUserById" parameterType="Int" resultType="User">
+		SELECT uid,nick,geqian,fileName FROM blogger WHERE uid = #{uid}
+	</select>
+	
+	<select id="selectBlogTotalByUid" resultType="Int">
+		SELECT count(*) FROM blog WHERE uid = #{uid}
+	</select>
+	
+	<!-- 根据月份和uid查询blog总数 -->
+	<select id="selectBlogTotalByMonthUid" resultType="Int">
+		SELECT count(*) FROM blog WHERE DATE_FORMAT(releaseDate,'%Y%m') = #{yearMonth }
+		<if test="uid != 0">
+			AND uid = #{uid }
+		</if>
+		order by releaseDate DESC
+	</select>
+	
+	<!-- 根据tag和uid查询blog总数 -->
+	<select id="selectBlogTotalByTagUid" resultType="Int">
+		SELECT count(*) FROM blog WHERE label LIKE concat('%', #{tag}, '%')
+		<if test="uid != 0">
+			AND uid = #{uid }
+		</if>
+	</select>
+	
+	<resultMap type="Blog" id="getBlogsByUidMap">
+		<id column="tid" property="tid"/>
+		<result column="uid" property="uid"/>
+		<result column="title" property="title"/>
+		<result column="releasedate" property="releasedate"/>
+		<result column="zannum" property="zannum"/>
+		<result column="talknum" property="talknum"/>
+		<result column="label" property="label"/>
+		<result column="text" property="text"/>
+		<!-- 关联查询用户昵称 -->
+		<association property="unick" javaType="String" select="selectUnickByUid" column="uid"/>
+	</resultMap>
+	
+	
+	<select id="getBlogsByUid" resultMap="getBlogsByUidMap">
+		SELECT * FROM blog
+		<if test="uid != 0">
+			WHERE uid=#{uid }
+		</if>
+		ORDER BY releaseDate DESC
+		limit #{pageStartIndex},#{pageSize}
+	</select>
+	
+	<select id="selectUnickByUid" resultType="String">
+		SELECT nick FROM blogger WHERE uid = #{uid}
+	</select>
+
+	<!-- 根据月份汇总博文分布情况 -->
+	<select id="getdateByMonth" parameterType="Int" resultType="ReleaseDateByMonth">
+		select DATE_FORMAT(releaseDate,'%Y%年%m%月') releaseMonth,count(releaseDate) number from blog
+		<if test="uid != 0">
+			WHERE uid=#{uid }
+		</if>
+		group by releaseMonth DESC
+	</select>
+
+	<select id="getLabelsByUid" parameterType="Int" resultType="String">
+		SELECT label FROM blog
+		<if test="uid != 0">
+			WHERE uid=#{uid }
+		</if>
+	</select>
+
+	<!-- 根据month和uid获取blog信息 -->
+	<select id="selsctBlogsByMonthUid" resultMap="getBlogsByUidMap">
+		SELECT * FROM  blog WHERE DATE_FORMAT(releaseDate,'%Y%m') = #{yearMonth}
+		<if test="uid != 0">
+			AND uid = #{uid}
+		</if>
+		order by releaseDate DESC limit #{pageStartIndex},#{pageSize}
+	</select>
+	
+	<!-- 根据tag和uid获取blog信息 -->
+	<select id="selsctBlogsByTagUid" resultMap="getBlogsByUidMap">
+		SELECT * FROM blog WHERE label LIKE concat('%', #{tag}, '%')
+		<if test="uid != 0">
+			AND uid = #{uid}
+		</if>
+		order by releaseDate DESC limit #{pageStarIndex},#{pageSize}
+	</select>
+
+	<delete id="deleteBlogByTid" parameterType="Int">
+		DELETE FROM blog WHERE tid = #{tId }
+	</delete>
+
+</mapper>

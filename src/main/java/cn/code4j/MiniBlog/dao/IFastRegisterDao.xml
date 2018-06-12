@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.code4j.MiniBlog.dao.IFastRegisterDao">
+
+	<select id="repeatabilityTest" resultType="User">
+		SELECT * FROM blogger
+		WHERE account=#{account }
+	</select>
+
+	<insert id="userRegister" parameterType="User" keyProperty="uid" >
+		INSERT INTO blogger
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="account != null">
+				account,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="nick != null">
+				nick,
+			</if>
+			<if test="shanchang != null">
+				shanchang,
+			</if>
+			<if test="geqian != null">
+				geqian,
+			</if>
+			<if test="fileName != null">
+				fileName,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				#{uid },
+			</if>
+			<if test="account != null">
+				#{account },
+			</if>
+			<if test="password != null">
+				#{password },
+			</if>
+			<if test="sex != null">
+				#{sex },
+			</if>
+			<if test="nick != null">
+				#{nick },
+			</if>
+			<if test="shanchang != null">
+				#{shanchang },
+			</if>
+			<if test="geqian != null">
+				#{geqian },
+			</if>
+			<if test="fileName != null">
+				#{fileName },
+			</if>
+		</trim>
+	</insert>
+	
+	<select id="selectUserByEmail" resultType="User">
+		select * from blogger where account = #{uEmail }
+	</select>
+
+
+</mapper>

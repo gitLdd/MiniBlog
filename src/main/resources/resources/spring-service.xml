@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 注册Service -->
+	<bean id="ILoginService" class="cn.code4j.MiniBlog.service.impl.LoginServiceImpl">
+		<property name="dao" ref="ILoginDao"></property>
+	</bean>
+	
+	<bean id="IfastRegisterService" class="cn.code4j.MiniBlog.service.impl.fastRegisterServiceImpl">
+		<property name="dao" ref="IFastRegisterDao"></property>
+	</bean>
+
+	<bean id="IreqIndexService" class="cn.code4j.MiniBlog.service.impl.reqIndexServiceImpl">
+		<property name="dao" ref="IReqIndexDao"></property>
+	</bean>
+	
+	<bean id="IroutineRegisterService" class="cn.code4j.MiniBlog.service.impl.routineRegisterServiceImpl">
+		<property name="dao" ref="IRoutineRegisterDao"></property>
+		<property name="fastRegdao" ref="IFastRegisterDao"></property>
+	</bean>
+	
+	<bean id="IaboutBlogService" class="cn.code4j.MiniBlog.service.impl.aboutBlogServiceImpl">
+		<property name="dao" ref="IAboutBlogDao"></property>
+	</bean>
+	
+	<bean id="ImodifyPasswordService" class="cn.code4j.MiniBlog.service.impl.modifyPasswordServiceImpl">
+		<property name="dao" ref="IModifyPwdDao"></property>
+	</bean>
+	
+	<bean id="IaboutBlogSingleService" class="cn.code4j.MiniBlog.service.impl.aboutBlogSingleServiceImpl">
+		<property name="dao" ref="IAboutBlogSingleDao"></property>
+	</bean>
+	
+	<bean id="ImodifyPersonMassageService" class="cn.code4j.MiniBlog.service.impl.modifyPersonMassageServiceImpl">
+		<property name="dao" ref="IMdfUserMsgDao"></property>
+	</bean>
+	
+	
+	<bean id="IContactService" class="cn.code4j.MiniBlog.service.impl.contactServiceImpl">
+		<property name="dao" ref="IContactDao"></property>
+	</bean>
+
+</beans>
+
+

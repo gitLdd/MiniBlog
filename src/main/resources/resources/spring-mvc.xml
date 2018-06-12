@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- 注册过滤器 -->
+	<bean id="validateLogonFilter" class="cn.code4j.MiniBlog.commons.filter.validateLogonFilter">
+		<property name="service" ref="ILoginService"></property>
+	</bean>
+
+	<!-- 注册组件扫描器 -->
+	<context:component-scan base-package="cn.code4j.MiniBlog.**.handlers" />
+	
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:conf/resource.properties" ignore-unresolvable="true" />
+	
+	<!-- 配置文件解析器  -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
+		<property name="defaultEncoding" value="UTF-8"/> 
+		<property name="maxUploadSize"  value="10000000"/>
+	</bean>
+
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.code4j.MiniBlog.dao.IMdfUserMsgDao">
+
+	<update id="updateNickByUid">
+		UPDATE blogger SET nick = #{param2 } WHERE uid = #{param1 }
+	</update>
+
+	<update id="updateSexByUid">
+		UPDATE blogger SET sex = #{param2 } WHERE uid = #{param1 }
+	</update>
+	
+	<update id="updateShanChangByUid">
+		UPDATE blogger SET shanchang = #{param2 } WHERE uid = #{param1 }
+	</update>
+
+	<update id="updateGeQianByUid">
+		UPDATE blogger SET geqian = #{param2 } WHERE uid = #{param1 }
+	</update>
+	
+	<update id="updatePWDByUid">
+		UPDATE blogger SET password = #{param2 } WHERE uid = #{param1 }
+	</update>
+
+
+</mapper>
