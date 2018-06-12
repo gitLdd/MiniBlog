@@ -3,7 +3,7 @@ package cn.code4j.MiniBlog.commons.beans;
 import java.util.Date;
 
 public class Blog {
-	/*嘻嘻嘻*/
+
     private Integer tid;
 
     private Integer uid;
@@ -96,7 +96,6 @@ public class Blog {
 
 	@Override
 	public String toString() {
-		System.out.println("xxxxxxxxxxxxxxxxxxx");
 		return "Blog [tid=" + tid + ", uid=" + uid + ", title=" + title + ", releasedate=" + releasedate + ", zannum="
 				+ zannum + ", talknum=" + talknum + ", label=" + label + ", text=" + text + ", unick=" + unick + "]";
 	}
